@@ -1,0 +1,291 @@
+// VueJS component for displaying and editing a list of films
+<template>
+  <div id="app">
+    <h1>Danh sách film</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên film</th>
+          <th>Hình ảnh film</th>
+          <th>Tác giả</th>
+          <th>Chi tiết film</th>
+          <th>Khởi chiếu</th>
+          <th>Thời lượng</th>
+          <th>Độ tuổi yêu cầu</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="film in films" :key="film.id">
+          <td>{{ film.id }}</td>
+          <td>{{ film.name }}</td>
+          <td><img :src="film.image" alt="Hình ảnh film" width="100" height="100"></td>
+          <td>{{ film.author }}</td>
+          <td>{{ film.details }}</td>
+          <td>{{ film.release_date }}</td>
+          <td>{{ film.duration }}</td>
+          <td>{{ film.age_requirement }}</td>
+          <td>
+            <button @click="editFilm(film)">Sửa</button>
+            <button @click="deleteFilm(film.id)">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Modal for adding or editing a film -->
+    <div id="modal" v-if="showModal">
+      <div class="modal-content">
+        <span class="close" @click="closeModal">×</span>
+
+        <!-- Form for adding or editing a film -->
+        <form @submit.prevent="submitFilm">
+          <h2>{{ modalTitle }}</h2>
+
+          <!-- Input fields for film properties -->
+          <div class="form-group">
+            <label for="name">Tên film:</label>
+            <input type="text" id="name" v-model="currentFilm.name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Hình ảnh film:</label>
+            <input type="text" id="image" v-model="currentFilm.image" required>
+          </div>
+
+          <div class="form-group">
+            <label for="author">Tác giả:</label>
+            <input type="text" id="author" v-model="currentFilm.author" required>
+          </div>
+
+          <div class="form-group">
+            <label for="details">Chi tiết film:</label>
+            <textarea id="details" v-model="currentFilm.details" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="release_date">Khởi chiếu:</label>
+            <input type="date" id="release_date" v-model="currentFilm.release_date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Thời lượng:</label>
+            <input type="number" id="duration" v-model="currentFilm.duration" required min="0">
+          </div>
+
+          <div class="form-group">
+            <label for="age_requirement">Độ tuổi yêu cầu:</label>
+            <input type="number" id="age_requirement" v-model="currentFilm.age_requirement" required min="0">
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit">{{ modalButton }}</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <!-- Button for adding a new film -->
+    <button id="add-button" @click="addFilm">Thêm film mới</button>
+
+  </div>
+
+</template>
+
+<script>
+
+// Import axios library for making HTTP requests
+import axios from 'axios';
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      // An array of films to display
+      films: [],
+
+      // A boolean flag to show or hide the modal
+      showModal: false,
+
+      // A string to indicate the title of the modal
+      modalTitle: '',
+
+      // A string to indicate the text of the submit button in the modal
+      modalButton: '',
+
+      // An object to store the current film being added or edited
+      currentFilm: {
+        id: null,
+        name: '',
+        image: '',
+        author: '',
+        details: '',
+        release_date: '',
+        duration: 0,
+        age_requirement: 0
+      }
+    }
+  },
+  methods: {
+    // Fetch the list of films from the API and update the state
+    fetchFilms() {
+      axios.get('/api/films')
+        .then(response => {
+          this.films = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Lỗi khi lấy danh sách film từ API');
+        });
+    },
+
+    // Show the modal for adding a new film and reset the current film object
+    addFilm() {
+      this.showModal = true;
+      this.modalTitle = 'Thêm film mới';
+      this.modalButton = 'Thêm';
+      this.currentFilm = {
+        id: null,
+        name: '',
+        image: '',
+        author: '',
+        details: '',
+        release_date: '',
+        duration: 0,
+        age_requirement: 0
+      };
+    },
+
+    // Show the modal for editing an existing film and copy the film object to the current film object
+    editFilm(film) {
+      this.showModal = true;
+      this.modalTitle = 'Sửa film';
+      this.modalButton = 'Sửa';
+      this.currentFilm = {...film};
+    },
+
+    // Hide the modal and reset the current film object
+    closeModal() {
+      this.showModal = false;
+      this.currentFilm = {
+        id: null,
+        name: '',
+        image: '',
+        author: '',
+        details: '',
+        release_date: '',
+        duration: 0,
+        age_requirement: 0
+      };
+    },
+
+    // Submit the current film object to the API for adding or editing
+    submitFilm() {
+      // Check if the current film has an id or not
+      if (this.currentFilm.id) {
+        // If it has an id, then it is an existing film, so we use PUT method to update it
+        axios.put('/api/films/' + this.currentFilm.id, this.currentFilm)
+          .then(response => {
+            // Update the corresponding film in the films array with the response data
+            let index = this.films.findIndex(film => film.id === response.data.id);
+            this.films.splice(index, 1, response.data);
+            // Hide the modal and reset the current film object
+            this.closeModal();
+            // Show a success message
+            alert('Sửa film thành công');
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Lỗi khi sửa film qua API');
+          });
+      } else {
+        // If it does not have an id, then it is a new film, so we use POST method to create it
+        axios.post('/api/films', this.currentFilm)
+          .then(response => {
+            // Push the response data to the films array
+            this.films.push(response.data);
+            // Hide the modal and reset the current film object
+            this.closeModal();
+            // Show a success message
+            alert('Thêm film thành công');
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Lỗi khi thêm film qua API');
+          });
+      }
+    },
+
+    // Delete a film by its id from the API and update the state
+    deleteFilm(id) {
+      // Confirm with the user before deleting
+      if (confirm('Bạn có chắc muốn xóa film này không?')) {
+        axios.delete('/api/films/' + id)
+          .then(response => {
+            // Filter out the deleted film from the films array
+            this.films = this.films.filter(film => film.id !== id);
+            // Show a success message
+            alert('Xóa film thành công');
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Lỗi khi xóa film qua API');
+          });
+      }
+    }
+  },
+  mounted() {
+    // Fetch the list of films when the component is mounted
+    this.fetchFilms();
+  }
+}
+</script>
+
+<style>
+/* CSS styles for the component */
+#app {
+  font-family: Arial, sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+img {
+  object-fit: cover;
+}
+
+button {
+  cursor: pointer;
+}
+
+#modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid black;
+  width: 80%;
+}
+
+
