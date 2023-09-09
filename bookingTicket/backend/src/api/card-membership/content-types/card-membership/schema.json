@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "card_memberships",
+  "info": {
+    "singularName": "card-membership",
+    "pluralName": "card-memberships",
+    "displayName": "Card_Membership"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "cardClass": {
+      "type": "string"
+    },
+    "moneyLimit": {
+      "type": "biginteger"
+    }
+  }
+}

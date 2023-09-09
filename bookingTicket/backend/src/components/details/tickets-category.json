@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_details_tickets_categories",
+  "info": {
+    "displayName": "Tickets_Category"
+  },
+  "options": {},
+  "attributes": {
+    "nameTicket": {
+      "type": "text"
+    },
+    "ticketPrice": {
+      "type": "biginteger"
+    }
+  }
+}

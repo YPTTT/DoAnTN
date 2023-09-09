@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cinemas",
+  "info": {
+    "singularName": "cinema",
+    "pluralName": "cinemas",
+    "displayName": "Cinemas",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nameCinema": {
+      "type": "text"
+    },
+    "imgCinema": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "address": {
+      "type": "text"
+    },
+    "phoneCinema": {
+      "type": "integer"
+    },
+    "contact": {
+      "type": "text"
+    },
+    "room": {
+      "type": "text"
+    }
+  }
+}

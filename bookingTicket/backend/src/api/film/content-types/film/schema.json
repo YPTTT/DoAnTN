@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "films",
+  "info": {
+    "singularName": "film",
+    "pluralName": "films",
+    "displayName": "Films",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nameFilm": {
+      "type": "string"
+    },
+    "imgFilm": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "details": {
+      "type": "text"
+    },
+    "author": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "ageRequirement": {
+      "type": "integer"
+    },
+    "tickets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ticket.ticket"
+    },
+    "room_cinemas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::room-cinema.room-cinema"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "room_cinemas",
+  "info": {
+    "singularName": "room-cinema",
+    "pluralName": "room-cinemas",
+    "displayName": "Room_Cinemas"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "roomNumber": {
+      "type": "integer"
+    },
+    "roomName": {
+      "type": "string"
+    }
+  }
+}

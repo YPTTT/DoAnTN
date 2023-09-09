@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bills",
+  "info": {
+    "singularName": "bill",
+    "pluralName": "bills",
+    "displayName": "Bills"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seat": {
+      "type": "string"
+    },
+    "timeSlot": {
+      "type": "string"
+    },
+    "quantityTicket": {
+      "type": "integer"
+    },
+    "spending": {
+      "type": "biginteger"
+    }
+  }
+}
