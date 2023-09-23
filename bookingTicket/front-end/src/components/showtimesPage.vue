@@ -2,55 +2,10 @@
   <div class="container">
     <mainMenu />
     <div class="grid-container">
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film1.jpeg" alt="#" /></a>
-            <a><p>Name Film 1</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film2.jpeg" alt="#" /></a>
-            <a><p>Name Film 2</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film3.jpeg" alt="#" /></a>
-            <a><p>Name Film 3</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film4.jpeg" alt="#" /></a>
-            <a><p>Name Film 4</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film5.jpeg" alt="#" /></a>
-            <a><p>Name Film 5</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film6.jpeg" alt="#" /></a>
-            <a><p>Name Film 6</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film7.jpeg" alt="#" /></a>
-            <a><p>Name Film 7</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film8.jpeg" alt="#" /></a>
-            <a><p>Name Film 8</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film9.jpeg" alt="#" /></a>
-            <a><p>Name Film 9</p></a>
-            <a><a-button>Mua vé</a-button></a>
-        </div>
-        <div class="gridItem">
-            <a><img src="../assets/listfilm/film10.jpeg" alt="#" /></a>
-            <a><p>Name Film 10</p></a>
-            <a><a-button>Mua vé</a-button></a>
+        <div class="gridItem" v-for="film in films" :key="film.id">
+            <router-link :to="{ name: 'detail-film', params: { id: film.id } }"><img :src="apiUrl + film.attributes.imgFilm.data.attributes.url" alt="#" /></router-link>
+            <router-link :to="{ name: 'detail-film', params: { id: film.id } }"><p>{{ film.attributes.nameFilm }}</p></router-link>
+            <router-link :to="{ name: 'detail-film', params: { id: film.id } }"><a-button>Mua vé</a-button></router-link>
         </div>
     </div>
     <footerPage/>
@@ -60,12 +15,36 @@
 <script>
 import mainMenu from './mainMenu.vue';
 import footerPage from './footerPage.vue';
+import axios from 'axios'
 export default {
     name: 'showtimesPage',
     components: {
         mainMenu,
         footerPage
-    }
+    },
+    data() {
+        return {
+            films: [],
+            apiUrl: 'http://localhost:3305'
+        };
+    },
+    mounted() {
+        this.fetchFilms();
+    },
+    methods: {
+        async fetchFilms() {
+            try {
+                const currentDate = new Date(); // Thời gian hiện tại
+                // Tính ngày 30 ngày trước đây
+                const releaseDateThreshold = new Date();
+                releaseDateThreshold.setDate(releaseDateThreshold.getDate() - 30);
+                const response = await axios.get(`http://localhost:3305/api/films?filters[releaseDate][$gte]=${releaseDateThreshold.toISOString()}&filters[releaseDate][$lte]=${currentDate.toISOString()}&populate=*`); // Thay 'URL_API_STRAPI' bằng URL API của bạn
+                this.films = response.data.data;
+            } catch (error) {
+                console.error('Lỗi khi gọi API:', error);
+            }
+        },
+    },
 }
 </script>
 
@@ -81,7 +60,7 @@ export default {
 {
     display: grid;
     grid-template-columns: auto auto auto auto auto;
-    gap: 2rem;
+    gap: 3rem;
     padding: 9rem 3rem 3rem 3rem;
 }
 .gridItem
@@ -91,8 +70,8 @@ export default {
 }
 .gridItem img
 {
-    width: 85%;
-    height: 80%;
+    width: 18rem;
+    height: 25rem;
     transition-duration: 0.5s;
 }
 .gridItem img:hover {

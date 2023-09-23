@@ -2,20 +2,8 @@
   <div class="container">
     <main-menu />
     <a-carousel autoplay>
-      <div class="sub-banners fade">
-        <img src="../assets/banners/banner1.jpg" />
-      </div>
-      <div class="sub-banners fade">
-        <img src="../assets/banners/banner2.jpg" />
-      </div>
-      <div class="sub-banners fade">
-        <img src="../assets/banners/banner3.jpg" />
-      </div>
-      <div class="sub-banners fade">
-        <img src="../assets/banners/banner4.jpg" />
-      </div>
-      <div class="sub-banners fade">
-        <img src="../assets/banners/banner5.jpg" />
+      <div class="sub-banners fade" v-for="imgBg in imgBgs" :key="imgBg.id">
+        <img :src="apiUrl + imgBg.attributes.imgBg.data.attributes.url" alt="#" />
       </div>
     </a-carousel>
     <div class="listFilm">
@@ -23,110 +11,18 @@
         <a @click="subFilm()"><h1>Phim đang chiếu</h1></a>
         <a @click="comingFilm()"><h1>Phim sắp chiếu</h1></a>
       </div>
-      <VueSlickCarousel class="sub-listFilm" v-bind="settings" autoplay>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film1.jpeg" alt="#" />
-          <p>Name Film 1</p>
-          <a-button type="submit">Mua vé</a-button>
+      <div class="sub-listFilm">
+        <div class="imageFilm" v-for="showingfilm in showingFilms" :key="showingfilm.id">
+          <router-link :to="{ name: 'detail-film', params: { id: showingfilm.id } }"><img class="imgShow" :src="apiUrl + showingfilm.attributes.imgFilm.data.attributes.url" alt="#" /></router-link>
+          <router-link :to="{ name: 'detail-film', params: { id: showingfilm.id } }"><p class="nameFilm">{{ showingfilm.attributes.nameFilm }}</p></router-link>
         </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film2.jpeg" alt="#" />
-          <p>Name Film 2</p>
-          <a-button type="submit">Mua vé</a-button>
+      </div>
+      <div class="coming-listFilm">
+        <div class="imageFilm" v-for="comingfilm in comingFilms" :key="comingfilm.id">
+          <router-link :to="{ name: 'detail-film', params: { id: comingfilm.id } }"><img class="imgShow" :src="apiUrl + comingfilm.attributes.imgFilm.data.attributes.url" alt="#" /></router-link>
+          <router-link :to="{ name: 'detail-film', params: { id: comingfilm.id } }"><p class="nameFilm">{{ comingfilm.attributes.nameFilm }}</p></router-link>
         </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film3.jpeg" alt="#" />
-          <p>Name Film 3</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film4.jpeg" alt="#" />
-          <p>Name Film 4</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film5.jpeg" alt="#" />
-          <p>Name Film 5</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film6.jpeg" alt="#" />
-          <p>Name Film 6</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film7.jpeg" alt="#" />
-          <p>Name Film 7</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film8.jpeg" alt="#" />
-          <p>Name Film 8</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film9.jpeg" alt="#" />
-          <p>Name Film 9</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/listfilm/film10.jpeg" alt="#" />
-          <p>Name Film 10</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-      </VueSlickCarousel>
-      <VueSlickCarousel class="coming-listFilm" v-bind="settings" autoplay>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming1.jpeg" alt="#" />
-          <p>Name Film 1</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming2.jpeg" alt="#" />
-          <p>Name Film 2</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming3.jpeg" alt="#" />
-          <p>Name Film 3</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming4.jpeg" alt="#" />
-          <p>Name Film 4</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming5.jpeg" alt="#" />
-          <p>Name Film 5</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming6.jpeg" alt="#" />
-          <p>Name Film 6</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming7.jpeg" alt="#" />
-          <p>Name Film 7</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming8.jpeg" alt="#" />
-          <p>Name Film 8</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming9.jpeg" alt="#" />
-          <p>Name Film 9</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-        <div class="imageFilm">
-          <img src="../assets/comingfilm/coming10.jpeg" alt="#" />
-          <p>Name Film 10</p>
-          <a-button type="submit">Mua vé</a-button>
-        </div>
-      </VueSlickCarousel>
+      </div>
     </div>
     <div class="typeMember">
       <h1>MEMBERSHIP</h1>
@@ -169,6 +65,8 @@ import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import footerPage from "./footerPage.vue";
+import axios from "axios"
+
 export default {
   name: "homePage",
   components: {
@@ -180,18 +78,60 @@ export default {
     return {
       settings: this.$store.state.settings,
       settings_promotion: this.$store.state.settings_promotion,
+      apiUrl: 'http://localhost:3305',
+      imgBgs: [],
+      showingFilms: [],
+      comingFilms: [],
+      isLogin: this.$store.state.isLogin,
     };
+  },
+  mounted() {
+    this.fetchImg();
+    this.fetchShowingFilms();
+    this.fetchComingFilms();
   },
   methods: {
     subFilm() {
-      document.querySelector(".sub-listFilm").style.display = "block";
+      document.querySelector(".sub-listFilm").style.display = "flex";
       document.querySelector(".coming-listFilm").style.display = "none";
     },
     comingFilm() {
       document.querySelector(".sub-listFilm").style.display = "none";
-      document.querySelector(".coming-listFilm").style.display = "block";
+      document.querySelector(".coming-listFilm").style.display = "flex";
     },
+    async fetchImg() {
+      try {
+        const response = await axios.get('http://localhost:3305/api/backgrounds?populate=*'); 
+        this.imgBgs = response.data.data;
+      } catch (error) {
+        console.error('Lỗi khi gọi API:', error);
+      }
+    },
+    async fetchShowingFilms() {
+      try {
+        const currentDate = new Date(); // Thời gian hiện tại
+        // Tính ngày 21 ngày trước đây
+        const releaseDateThreshold = new Date();
+        releaseDateThreshold.setDate(releaseDateThreshold.getDate() - 21);
+        const response = await axios.get(`http://localhost:3305/api/films?filters[releaseDate][$gte]=${releaseDateThreshold.toISOString()}&filters[releaseDate][$lte]=${currentDate.toISOString()}&populate=*`);
+        this.showingFilms = response.data.data;
+        console.log(this.showingFilms);
+      } catch(error){
+        console.error('Lỗi khi gọi API:', error);
+      }
+    },
+    async fetchComingFilms() {
+      try {
+        const currentDate = new Date(); // Thời gian hiện tại
+        const response = await axios.get(`http://localhost:3305/api/films?filters[releaseDate][$gte]=${currentDate.toISOString()}&populate=*`);
+        this.comingFilms = response.data.data;
+        console.log(this.comingFilms);
+      } catch(error){
+        console.error('Lỗi khi gọi API:', error);
+      }
+    }, 
   },
+  
 };
 </script>
 
@@ -227,51 +167,47 @@ ant-carousel {
   font-weight: bold;
 }
 .sub-listFilm {
-  display: block;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
 }
 .coming-listFilm {
   display: none;
 }
 .imageFilm {
-  height: 24rem;
+  height: 20rem;
   width: 16rem;
-  overflow: hidden;
-  display: flex !important;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.imageFilm img {
-  width: 90%;
-  height: 75%;
+.imageFilm a
+{
+  width: 100%;
+  height: 100%;
+}
+.imageFilm .imgShow {
+  width: 80%;
+  height: 100%;
   transition-duration: 0.5s;
 }
 .imageFilm img:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
-.imageFilm p {
+.imageFilm .nameFilm {
   margin-top: 1rem;
+  height: 4rem;
   color: white;
   font-size: 16px;
   font-weight: bold;
   transition-duration: 0.5s;
 }
-.imageFilm p:hover {
+.imageFilm .nameFilm:hover {
   scale: 1.2;
   color: aquamarine;
-}
-.imageFilm button {
-  width: 60%;
-  height: 2rem;
-  border-radius: 14px;
-  border: none;
-  background: aquamarine;
-  font-weight: bold;
-}
-.imageFilm button:hover {
-  scale: 1.1;
-  background: white;
 }
 .typeMember {
   width: 100%;
@@ -300,9 +236,10 @@ ant-carousel {
 }
 .sub-proMotion div {
   width: 30%;
-  height: 14rem;
+  height: 15rem;
 }
 .sub-proMotion div img {
   width: 90%;
+  height: 100%;
 }
 </style>

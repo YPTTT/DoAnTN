@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_sub_time_time_slots",
+  "info": {
+    "displayName": "timeSlot"
+  },
+  "options": {},
+  "attributes": {
+    "slotTime": {
+      "type": "string"
+    }
+  }
+}

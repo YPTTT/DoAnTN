@@ -4,16 +4,11 @@
     <div class="container" id="container">
       <div class="form-container register-container">
         <form action="#" @submit.prevent>
-          <h1>Register</h1>
+          <h1>Đăng ký</h1>
           <input
             type="text"
-            placeholder="Last name"
-            v-model="accountRegister.lastName"
-          />
-          <input
-            type="text"
-            placeholder="First Name"
-            v-model="accountRegister.firstName"
+            placeholder="username"
+            v-model="accountRegister.username"
           />
           <input
             type="text"
@@ -21,14 +16,9 @@
             v-model="accountRegister.phoneNumber"
           />
           <input
-            type="text"
-            placeholder="Address"
-            v-model="accountRegister.address"
-          />
-          <input
-            type="text"
+            type="date"
             placeholder="Birthday"
-            v-model="accountRegister.birthDay"
+            v-model="accountRegister.date"
           />
           <input
             type="email"
@@ -41,79 +31,53 @@
             placeholder="Password"
             v-model="accountRegister.password"
           />
-          <input
-            type="text"
-            placeholder="Role"
-            v-model="accountRegister.roles"
-          />
-          <a-button type="submit" @click="registerUser()">Register</a-button>
-          <span>or use your account</span>
-          <div class="social-container">
-            <a href="#" class="social"
-              ><i class="fa-brands fa-facebook fa-2xl"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa-brands fa-google fa-2xl"></i
-            ></a>
-          </div>
+          <a-button type="submit" @click="registerUser()">Đăng ký</a-button>
         </form>
-        <p v-if="errorMessage">{{ errorMessage }}</p>
       </div>
       <div class="form-container login-container">
         <form action="#" @submit.prevent>
-          <h1>Login</h1>
+          <h1>Đăng nhập</h1>
           <input
             type="email"
             placeholder="Email"
-            v-model="accountLogin.emailLogin"
+            v-model="accountLogin.email"
           />
           <input
             type="password"
             placeholder="Password"
-            v-model="accountLogin.passwordLogin"
+            v-model="accountLogin.password"
           />
           <div class="content">
             <div class="pass-link">
-              <a href="#">Forgot password?</a>
+              <router-link to="/forgotPassword">Quên mật khẩu</router-link>
             </div>
           </div>
-          <a-button type="submit" @click="loginUser()">Login</a-button>
-          <span>or use your account</span>
-          <div class="social-container">
-            <a href="#" class="social"
-              ><i class="fa-brands fa-facebook fa-2xl"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa-brands fa-google fa-2xl"></i
-            ></a>
-          </div>
+          <a-button type="submit" @click="loginUser()">Đăng nhập</a-button>
         </form>
-        <p v-if="errorMessage">{{ errorMessage }}</p>
       </div>
       <div class="overplay-container">
         <div class="overplay">
           <div class="overplay-panel overplay-left">
             <h1 class="title">
-              Hello <br />
-              friends
+              Chào bạn
             </h1>
-            <p>If you have an account, login here</p>
+            <p>Nếu bạn đã có tài khoản, mời bạn đăng nhập tại đây!</p>
             <a-button class="ghost" id="login">
-              Login
+              Đăng nhập ngay
               <i class="fa-solid fa-arrow-left login"></i>
             </a-button>
           </div>
           <div class="overplay-panel overplay-right">
             <h1 class="title">
-              Start your <br />
-              journey now
+              Bắt đầu sử dụng<br />
+              ngay bây giờ
             </h1>
             <p>
-              If you don't have an account yet,<br />
-              join us and start your journey
+              Nếu bạn chưa có tài khoản<br />
+              tham gia với chúng tôi và bắt đầu sử dụng
             </p>
             <a-button class="ghost" id="register">
-              Register
+              Đăng ký ngay
               <i class="fa-solid fa-arrow-right register"></i>
             </a-button>
           </div>
@@ -130,27 +94,22 @@ export default {
   name: "loginPage",
   data() {
     return {
-      errorMessage: "",
-      accountRegister: [
+      accountRegister: 
         {
-          lastName: "",
-          firstName: "",
+          username: "",
           phoneNumber: "",
-          address: "",
-          birthday: "",
+          date: "",
           email: "",
-          password: "",
-          roles: "",
+          password: ""
         },
-      ],
-      accountLogin: [
+      accountLogin: 
         {
-          emailLogin: "",
-          passwordLogin: "",
-          success: false,
+          email: "",
+          password: ""
         },
-      ],
-      errors: [],
+      auth: {
+        isLogin: this.$store.state.auth.isLogin,
+      }
     };
   },
   components: {
@@ -159,56 +118,44 @@ export default {
   methods: {
     async registerUser() {
       try {
-        const response = await axios.post(
-          "http://tuyenhaitan.click:8080/register/users",
-          {
-            lastName: this.accountRegister.lastName,
-            firstName: this.accountRegister.firstName,
-            phoneNumber: this.accountRegister.phoneNumber,
-            address: this.accountRegister.address,
-            birthDay: this.accountRegister.birthDay,
-            accountDTO: {
-              email: this.accountRegister.email,
-              password: this.accountRegister.password,
-              roles: [this.accountRegister.roles],
-            },
-          }
-        );
-        this.errorMessage = response.data.message;
-        this.accountRegister.lastName = "";
-        this.accountRegister.firstName = "";
+        const response = await axios.post("http://localhost:3305/api/auth/local/register", this.accountRegister);
+        this.accountRegister.username = "";
         this.accountRegister.phoneNumber = "";
-        this.accountRegister.address = "";
-        this.accountRegister.birthday = "";
+        this.accountRegister.date = "";
         this.accountRegister.email = "";
         this.accountRegister.password = "";
-        this.accountRegister.roles = "";
+        console.log(response.data);
+        console.log('user profile:', response.data.user)
+        localStorage.setItem('jwtToken', response.data.jwt);
+        alert("Đăng ký thành công!");
       } catch (error) {
-        this.errorMessage = error.message;
-        setTimeout(() => (this.errorMessage = ""), 5000);
+        console.log(error);
+        alert("Đăng ký thất bại");
       }
     },
     async loginUser() {
       try {
-        const response = await axios.post(
-          "http://tuyenhaitan.click:8080/login",
-          {
-            email: this.accountLogin.emailLogin,
-            password: this.accountLogin.passwordLogin,
+        const response = await axios.post("http://localhost:3305/api/auth/local", 
+        {
+          identifier: this.accountLogin.email,
+          password: this.accountLogin.password,
+        });
+        const { jwt, user} = response.data;
+        localStorage.setItem('jwt', jwt);
+        localStorage.setItem('userData', JSON.stringify(user));
+        const response2 = await axios.get(`http://localhost:3305/api/users/${user.id}?populate=*`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
           }
-        );
-        const roles = response.data.userDTO.accountDTO.roles;
-        if (roles == "USER") {
+        });
+        localStorage.setItem('userInfo', JSON.stringify(response2.data))
+        if (!alert("Đăng nhập thành công!")) {
           this.$router.push("/");
-        } else if (roles == "ADMIN") {
-          this.$router.push("/dashboard");
         }
-        this.accountLogin.success = true;
-        this.accountLogin.emailLogin = "";
-        this.accountLogin.passwordLogin = "";
       } catch (error) {
-        this.errorMessage = error.message;
-        setTimeout(() => (this.errorMessage = ""), 5000);
+        console.log(error)
+        alert("Đăng nhập thất bại!");
+        this.password='';
       }
     },
   },
@@ -254,6 +201,7 @@ h1.title {
   line-height: 45px;
   margin: 0;
   text-shadow: 0 0 10px rgb(16, 64, 74, 0.5);
+  color: white;
 }
 
 p {
@@ -375,7 +323,7 @@ form {
   justify-content: center;
   flex-direction: column;
   padding: 0 2rem;
-  height: 100%;
+  height: 95%;
   text-align: center;
 }
 
@@ -395,14 +343,14 @@ input {
   overflow: hidden;
   width: 80%;
   max-width: 100%;
-  height: 85%;
+  height: 75%;
   min-height: 30rem;
   margin-top: 5rem;
 }
 .form-container {
   position: absolute;
   top: 0;
-  height: 70%;
+  height: 80%;
   transition: all 0.6s ease-in-out;
 }
 .login-container {
@@ -513,22 +461,5 @@ input {
 }
 .container.right-panel-active .overplay-right {
   transform: translateX(-20%);
-}
-.social-container {
-  margin: 10px 0;
-}
-.social-container a {
-  border: 1px solid #dddddd;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
-  transition: 0.3s ease-in-out;
-}
-.social-container a {
-  border: 1px solid #4bb6b7;
 }
 </style>

@@ -7,8 +7,11 @@ import promotionPage from '../components/promotionPage'
 import adsPage from '../components/adsPage'
 import aboutPage from '../components/aboutPage'
 import loginPage from '../components/loginPage'
-import adminHome from '../components/admin/adminHome'
-import filmPage from '../components/admin/filmPage'
+import listCinema from '../components/listCinema'
+import detailFilm from '../components/detailFilm'
+import detailCinema from '../components/detailCinema'
+import forgotPassword from '../components/forgotPassword'
+import resetPassword from '../components/resetPassword'
 
 Vue.use(VueRouter)
 const routes = [
@@ -19,11 +22,15 @@ const routes = [
     {path: '/aboutPage', component: aboutPage},
     {path: '/loginPage', component: loginPage},
     {path: '/loginSuccess', redirect: '/'},
-    {path: '/adminHome', component: adminHome},
-    {path: '/filmPage', component: filmPage},
+    {path: '/listCinema', component: listCinema},
+    {path: '/detailFilm/:id', name: 'detail-film', component: detailFilm},
+    {path: '/detailCinema/:id', name: 'detail-cinema', component: detailCinema},
+    {path: '/forgotPassword', component: forgotPassword},
+    {path: '/resetPassword', component: resetPassword}
 ]
 
 const router = new VueRouter({
+    mode: 'history',
     routes
 })
 

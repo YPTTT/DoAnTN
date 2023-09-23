@@ -4,7 +4,8 @@
   "info": {
     "singularName": "card-membership",
     "pluralName": "card-memberships",
-    "displayName": "Card_Membership"
+    "displayName": "Card_Membership",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,6 +17,15 @@
     },
     "moneyLimit": {
       "type": "biginteger"
+    },
+    "discount": {
+      "type": "string"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "card_membership"
     }
   }
 }

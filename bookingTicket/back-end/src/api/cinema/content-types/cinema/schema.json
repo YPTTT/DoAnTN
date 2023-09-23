@@ -13,7 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "nameCinema": {
-      "type": "text"
+      "type": "string"
     },
     "imgCinema": {
       "type": "media",
@@ -27,16 +27,16 @@
       ]
     },
     "address": {
-      "type": "text"
+      "type": "string"
     },
     "phoneCinema": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "contact": {
-      "type": "text"
+      "type": "string"
     },
     "room": {
-      "type": "text"
+      "type": "string"
     }
   }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bill",
     "pluralName": "bills",
-    "displayName": "Bills"
+    "displayName": "Bills",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,6 +23,11 @@
     },
     "spending": {
       "type": "biginteger"
+    },
+    "tickets_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ticket.ticket"
     }
   }
 }

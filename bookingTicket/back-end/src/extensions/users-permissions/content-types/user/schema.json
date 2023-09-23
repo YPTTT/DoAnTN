@@ -63,8 +63,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "Date": {
+    "date": {
       "type": "date"
+    },
+    "phoneNumber": {
+      "type": "biginteger"
+    },
+    "card_membership": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::card-membership.card-membership",
+      "inversedBy": "users"
     }
   }
 }

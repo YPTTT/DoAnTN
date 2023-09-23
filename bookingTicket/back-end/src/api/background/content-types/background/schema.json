@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "backgrounds",
+  "info": {
+    "singularName": "background",
+    "pluralName": "backgrounds",
+    "displayName": "background"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "imgBg": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

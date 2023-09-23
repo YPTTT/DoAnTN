@@ -47,6 +47,14 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::room-cinema.room-cinema"
+    },
+    "releaseDate": {
+      "type": "date"
+    },
+    "timeSlot": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sub-time.time-slot"
     }
   }
 }
