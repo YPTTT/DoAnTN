@@ -28,6 +28,25 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::ticket.ticket"
+    },
+    "billTime": {
+      "type": "datetime"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "bill"
+    },
+    "cinema": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cinema.cinema"
+    },
+    "film": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::film.film"
     }
   }
 }

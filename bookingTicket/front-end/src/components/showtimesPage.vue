@@ -37,7 +37,7 @@ export default {
                 const currentDate = new Date(); // Thời gian hiện tại
                 // Tính ngày 30 ngày trước đây
                 const releaseDateThreshold = new Date();
-                releaseDateThreshold.setDate(releaseDateThreshold.getDate() - 30);
+                releaseDateThreshold.setDate(releaseDateThreshold.getDate() - 21);
                 const response = await axios.get(`http://localhost:3305/api/films?filters[releaseDate][$gte]=${releaseDateThreshold.toISOString()}&filters[releaseDate][$lte]=${currentDate.toISOString()}&populate=*`); // Thay 'URL_API_STRAPI' bằng URL API của bạn
                 this.films = response.data.data;
             } catch (error) {

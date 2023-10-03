@@ -10,9 +10,6 @@
         <a><h1>Quy định & điều khoản</h1></a>
         <a><p>Quy định thành viên</p></a>
         <a><p>Điều khoản</p></a>
-        <a><p>Hướng dẫn đặt vé trực tuyến</p></a>
-        <a><p>Quy định và chính sách chung</p></a>
-        <a><p>Chính sách bảo vệ thông tin cá nhân của người tiêu dùng</p></a>
       </div>
     </div>
 </template>

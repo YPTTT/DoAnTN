@@ -16,7 +16,15 @@
           <img src="../assets/menu/icon_fb.png"/>
         </a>
         <a-button class="loginAccount" id="isLogin"><router-link to="/loginPage">Đăng nhập</router-link></a-button>
-        <a-button class="loginAccount" id="isLogout"><router-link to="" > {{ username.username }} </router-link></a-button>
+        <a-dropdown-button id="isLogout" class="menuUser">
+          {{ username.username }}
+          <a-menu slot="overlay" @click="handleMenuClick" class="infoUser">
+            <router-link to="/manageUser" class="sub-user"><a-menu-item key="1"> <a-icon class="sub-icon" type="user" />Quản lý hồ sơ &nbsp; &nbsp;</a-menu-item></router-link>
+            <router-link to="" class="sub-user"><a-menu-item key="2"> <a-icon class="sub-icon" type="user" />Lịch sử giao dịch </a-menu-item></router-link>
+            <router-link to="" class="sub-user"><a-menu-item key="3"> <a-icon class="sub-icon" type="user" />Đăng xuất &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a-menu-item></router-link>
+          </a-menu>
+          <a-icon slot="icon" type="user" />
+        </a-dropdown-button>
       </div>
     </div>
 </template>
@@ -32,18 +40,15 @@ export default {
   },
   mounted() {
     const userData = window.localStorage.getItem('userInfo');
-    if (userData)
-    {
+    if (userData) {
       this.username = JSON.parse(userData);
     }
-    window.addEventListener("beforeunload", this.handleBeforeUnload);
-    if(localStorage.getItem('jwt'))
-      {
-        document.querySelector("#isLogin").style.display = "none";
-        document.querySelector("#isLogout").style.display = "block";
-      }
-    // this.fetchDataWithJWT();
-    console.log(this.username);
+    // window.addEventListener("beforeunload", this.handleBeforeUnload);
+    if (localStorage.getItem('jwt')) {
+      document.querySelector("#isLogin").style.display = "none";
+      document.querySelector("#isLogout").style.display = "block";
+    }
+    
   },
   methods: {
     showAlert() {
@@ -59,17 +64,22 @@ export default {
         localStorage.removeItem("userData");
       }
     },
-    
+    handleButtonClick(e) {
+      console.log('click left button', e);
+    },
+    handleMenuClick(e) {
+      console.log('click', e);
+    },
   },
 }
 </script>
 
 <style scoped>
 #isLogin{
-  display: block;
+  display: none;
 }
 #isLogout{
-  display: none;
+  display: block;
 }
 .listMenu {
   width: 100%;
@@ -128,5 +138,30 @@ ul {
 .mainMenu a li:hover {
   scale: 1.2;
   color: aqua;
+}
+.menuUser
+{
+  margin-right: 3rem;
+  margin-left: 1rem;
+  
+}
+.infoUser
+{
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+.sub-user
+{
+  padding: 0.5rem;
+  color: black;
+}
+.sub-user:hover
+{
+  background: aqua;
+}
+.sub-user .sub-icon
+{
+  margin-right: 0.3rem;
 }
 </style>

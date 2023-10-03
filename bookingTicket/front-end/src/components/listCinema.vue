@@ -28,10 +28,10 @@
           };
       },
       mounted() {
-          this.fetchFilms();
+          this.fetchCinemas();
       },
       methods: {
-          async fetchFilms() {
+          async fetchCinemas() {
               try {
                   const response = await axios.get('http://localhost:3305/api/Cinemas?populate=*'); 
                   this.cinemas = response.data.data;

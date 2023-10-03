@@ -69,11 +69,16 @@
     "phoneNumber": {
       "type": "biginteger"
     },
-    "card_membership": {
+    "bills": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::card-membership.card-membership",
-      "inversedBy": "users"
+      "relation": "oneToMany",
+      "target": "api::bill.bill"
+    },
+    "bill": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::bill.bill",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

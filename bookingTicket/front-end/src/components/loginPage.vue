@@ -107,9 +107,6 @@ export default {
           email: "",
           password: ""
         },
-      auth: {
-        isLogin: this.$store.state.auth.isLogin,
-      }
     };
   },
   components: {
@@ -126,7 +123,7 @@ export default {
         this.accountRegister.password = "";
         console.log(response.data);
         console.log('user profile:', response.data.user)
-        localStorage.setItem('jwtToken', response.data.jwt);
+        localStorage.setItem('jwt', response.data.jwt);
         alert("Đăng ký thành công!");
       } catch (error) {
         console.log(error);
@@ -148,7 +145,7 @@ export default {
             Authorization: `Bearer ${jwt}`,
           }
         });
-        localStorage.setItem('userInfo', JSON.stringify(response2.data))
+        localStorage.setItem('userInfo', JSON.stringify(response2?.data || []));
         if (!alert("Đăng nhập thành công!")) {
           this.$router.push("/");
         }

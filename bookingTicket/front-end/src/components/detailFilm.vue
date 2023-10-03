@@ -22,7 +22,7 @@
                                 <p class="required_film">T{{ film.attributes.ageRequirement }} - PHIM DÀNH CHO KHÁN GIẢ TỪ {{ film.attributes.ageRequirement }} TRỞ LÊN</p> 
                             </div>
                         </div>
-                        <a-button class="button_film"><i class="fa-solid fa-ticket"></i>Mua vé ngay</a-button>
+                        <a-button class="button_film" @click="pushPage"><i class="fa-solid fa-ticket"></i>Mua vé ngay</a-button>
                     </div>
                 </div>
             </div>
@@ -43,8 +43,13 @@ export default {
     data() {
         return {
             film: {},
+            date: localStorage.getItem('userInfo'),
+            age: null,
             apiUrl: 'http://localhost:3305'
         };
+    },
+    created: function() {
+        this.calculateAge();
     },
     mounted() {
         this.fetchFilms();
@@ -54,8 +59,30 @@ export default {
             try {
                 const response = await axios.get(`http://localhost:3305/api/Films/${this.$route.params.id}?populate=*`); // Thay 'URL_API_STRAPI' bằng URL API của bạn
                 this.film = response.data.data;
+                localStorage.setItem('detailFilm', response)
             } catch (error) {
                 console.error('Lỗi khi gọi API:', error);
+            }
+        },
+        calculateAge: function() {
+          var birthdate = JSON.parse(this.date);
+          birthdate = Date.parse(birthdate.date);
+          var today = Date.now();
+          var diff = today - birthdate;
+          this.age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        },
+        pushPage() {
+            const jwt = localStorage.getItem('jwt')
+            const realTime = new Date();
+            const releasedate = new Date(this.film.attributes.releaseDate); 
+            const ageRequirement = this.film.attributes.ageRequirement;
+            if (jwt && releasedate <= realTime && this.age >= ageRequirement)
+            {
+                this.$router.push({ name: 'booking-page', params: { id: this.film.id } })
+            }
+            else
+            {
+               alert(`Bạn phải đủ ${ageRequirement} tuổi`);
             }
         },
     },

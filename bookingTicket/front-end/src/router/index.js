@@ -12,6 +12,8 @@ import detailFilm from '../components/detailFilm'
 import detailCinema from '../components/detailCinema'
 import forgotPassword from '../components/forgotPassword'
 import resetPassword from '../components/resetPassword'
+import manageUser from '../components/manageUser'
+import bookingPage from '../components/bookingPage'
 
 Vue.use(VueRouter)
 const routes = [
@@ -26,7 +28,9 @@ const routes = [
     {path: '/detailFilm/:id', name: 'detail-film', component: detailFilm},
     {path: '/detailCinema/:id', name: 'detail-cinema', component: detailCinema},
     {path: '/forgotPassword', component: forgotPassword},
-    {path: '/resetPassword', component: resetPassword}
+    {path: '/resetPassword', component: resetPassword},
+    {path: '/manageUser', component: manageUser},
+    {path: '/bookingPage/:id', name: 'booking-page', component: bookingPage}
 ]
 
 const router = new VueRouter({
