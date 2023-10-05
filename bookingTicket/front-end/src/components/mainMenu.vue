@@ -20,8 +20,7 @@
           {{ username.username }}
           <a-menu slot="overlay" @click="handleMenuClick" class="infoUser">
             <router-link to="/manageUser" class="sub-user"><a-menu-item key="1"> <a-icon class="sub-icon" type="user" />Quản lý hồ sơ &nbsp; &nbsp;</a-menu-item></router-link>
-            <router-link to="" class="sub-user"><a-menu-item key="2"> <a-icon class="sub-icon" type="user" />Lịch sử giao dịch </a-menu-item></router-link>
-            <router-link to="" class="sub-user"><a-menu-item key="3"> <a-icon class="sub-icon" type="user" />Đăng xuất &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a-menu-item></router-link>
+            <router-link to="" class="sub-user"><a-menu-item key="2"> <a-icon class="sub-icon" type="user" />Đăng xuất &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a-menu-item></router-link>
           </a-menu>
           <a-icon slot="icon" type="user" />
         </a-dropdown-button>

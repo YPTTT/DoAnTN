@@ -7,4 +7,13 @@ module.exports = ({ env }) => ({
   webhooks: {
     populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
   },
+  csp: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "example.com"],
+      styleSrc: ["'self'", "example.com"],
+      imgSrc: ["'self'", "data:", "res.cloudinary.com"],
+      // Thêm các chỉ định khác ở đây nếu cần
+    },
+  },
 });

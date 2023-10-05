@@ -11,24 +11,14 @@
                         <p>Số điện thoại</p>
                         <p>Sinh nhật</p>
                         <p>Mật khẩu</p>
-                        <p class="newPassword">Mật khẩu mới</p>
-                        <a-button class="newPassword">Cập nhật</a-button>
                     </div>
                     <div>
                         <p>{{ userName.email }}</p>
                         <p>{{ userName.username }}</p>
                         <p>0{{ userName.phoneNumber }}</p>
                         <p>{{ userName.date }}</p>
-                        <p>********** <a-button @click="toggleButton">ĐỔI MẬT KHẨU</a-button></p>
-                        <input class="newPassword" v-model="newPassword"/>
+                        <p>**********</p>
                     </div>
-                </div>
-            </div>
-            <div class="infoMembership">
-                <h1>Thông tin thẻ thành viên</h1>
-                <div>
-                    <p>Email: {{ userName.email }}</p>
-                    <p>Hạng thẻ:</p>
                 </div>
             </div>
         </div>
@@ -39,6 +29,7 @@
 <script>
 import mainMenu from "./mainMenu.vue";
 import footerPage from "./footerPage.vue";
+// import axios from 'axios';
 export default {
     name: 'manageUser',
     components: {
@@ -48,7 +39,6 @@ export default {
     data() {
         return {
             userName: JSON.parse(localStorage.getItem('userInfo')),
-            newPassword: '',
         }
     },
     methods: {
@@ -61,7 +51,7 @@ export default {
                 }
                 else { toggleButton.style.display = "none"; }
             }
-        }
+        }, 
     }
 }
 </script>

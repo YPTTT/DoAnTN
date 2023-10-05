@@ -80,9 +80,17 @@ export default {
             {
                 this.$router.push({ name: 'booking-page', params: { id: this.film.id } })
             }
-            else
+            else if (!jwt)
             {
-               alert(`Bạn phải đủ ${ageRequirement} tuổi`);
+                this.$router.push('/loginPage');
+            }
+            else if (releasedate > realTime)
+            {
+                alert(`Phim chưa được chiếu!`);
+            }
+            else if (this.age < ageRequirement)
+            {
+                alert(`Bạn chưa đủ ${ageRequirement} tuổi!`);
             }
         },
     },
