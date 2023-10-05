@@ -12,41 +12,26 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "seat": {
-      "type": "string"
-    },
     "timeSlot": {
-      "type": "string"
+      "type": "text"
     },
     "quantityTicket": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "spending": {
       "type": "biginteger"
     },
-    "tickets_category": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::ticket.ticket"
+    "email": {
+      "type": "text"
     },
-    "billTime": {
-      "type": "datetime"
+    "nameTicket": {
+      "type": "text"
     },
-    "users_permissions_user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "bill"
+    "nameCinema": {
+      "type": "text"
     },
-    "cinema": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::cinema.cinema"
-    },
-    "film": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::film.film"
+    "nameFilm": {
+      "type": "text"
     }
   }
 }

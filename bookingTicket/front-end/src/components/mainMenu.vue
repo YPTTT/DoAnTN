@@ -19,8 +19,8 @@
         <a-dropdown-button id="isLogout" class="menuUser">
           {{ username.username }}
           <a-menu slot="overlay" @click="handleMenuClick" class="infoUser">
-            <router-link to="/manageUser" class="sub-user"><a-menu-item key="1"> <a-icon class="sub-icon" type="user" />Quản lý hồ sơ &nbsp; &nbsp;</a-menu-item></router-link>
-            <router-link to="" class="sub-user"><a-menu-item key="2"> <a-icon class="sub-icon" type="user" />Đăng xuất &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a-menu-item></router-link>
+            <router-link to="/manageUser" class="sub-user"><a-menu-item key="1"><a-icon class="sub-icon" type="user" />Quản lý hồ sơ &nbsp; &nbsp;</a-menu-item></router-link>
+            <router-link to="" class="sub-user"><a-menu-item key="2" @click="logout"><a-icon class="sub-icon" type="user" />Đăng xuất &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a-menu-item></router-link>
           </a-menu>
           <a-icon slot="icon" type="user" />
         </a-dropdown-button>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-// import axios from 'axios';
 export default {
     name: 'mainMenu',
   data() {
@@ -42,7 +41,7 @@ export default {
     if (userData) {
       this.username = JSON.parse(userData);
     }
-    // window.addEventListener("beforeunload", this.handleBeforeUnload);
+    window.addEventListener("beforeunload", this.handleBeforeUnload);
     if (localStorage.getItem('jwt')) {
       document.querySelector("#isLogin").style.display = "none";
       document.querySelector("#isLogout").style.display = "block";
@@ -57,10 +56,20 @@ export default {
       // Kiểm tra xem mã JWT có trong localStorage hay không
       const jwtToken = localStorage.getItem("jwt");
       if (jwtToken) {
-        // Nếu có, xóa nó khỏi localStorage khi trang bị làm mới
+        //Nếu có, xóa nó khỏi localStorage khi trang bị làm mới
         localStorage.removeItem("jwt");
         localStorage.removeItem("userInfo");
         localStorage.removeItem("userData");
+      }
+    },
+    logout() {
+      // Kiểm tra xem mã JWT có tồn tại trong localStorage không
+      const jwt = localStorage.getItem('jwt');
+      if (jwt) {
+        localStorage.removeItem('jwt');
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userData");
+        this.$router.replace({ path: '/' });
       }
     },
     handleButtonClick(e) {
@@ -75,10 +84,10 @@ export default {
 
 <style scoped>
 #isLogin{
-  display: none;
+  display: block;
 }
 #isLogout{
-  display: block;
+  display: none;
 }
 .listMenu {
   width: 100%;

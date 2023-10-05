@@ -15,6 +15,7 @@ import resetPassword from '../components/resetPassword'
 import manageUser from '../components/manageUser'
 import bookingPage from '../components/bookingPage'
 import returnVnpay from '../components/returnVnpay'
+import payPage from '../components/payPage'
 
 Vue.use(VueRouter)
 const routes = [
@@ -32,7 +33,8 @@ const routes = [
     {path: '/resetPassword', component: resetPassword},
     {path: '/manageUser', component: manageUser},
     {path: '/bookingPage/:id', name: 'booking-page', component: bookingPage},
-    {path: '/return-vnpay', component: returnVnpay}
+    {path: '/return-vnpay', component: returnVnpay},
+    {path: '/payPage', component: payPage}
 ]
 
 const router = new VueRouter({

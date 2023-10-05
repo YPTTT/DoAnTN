@@ -24,14 +24,6 @@
         </div>
       </div>
     </div>
-    <div class="typeMember">
-      <h1>MEMBERSHIP</h1>
-      <div class="sub-typeMember">
-        <img src="../assets/typemember/STAR.png" alt="#" />
-        <img src="../assets/typemember/GOLD.png" alt="#" />
-        <img src="../assets/typemember/DIAMOND.png" alt="#" />
-      </div>
-    </div>
     <div class="proMotion">
       <h1>Khuyến mãi</h1>
       <VueSlickCarousel

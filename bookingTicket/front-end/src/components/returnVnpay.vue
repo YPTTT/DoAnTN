@@ -66,6 +66,7 @@
 import mainMenu from './mainMenu.vue';
 import footerPage from './footerPage.vue';
 export default {
+  name: "returnVnpay",
   components: { mainMenu, footerPage },
   data()
   {

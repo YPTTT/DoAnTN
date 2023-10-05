@@ -22,14 +22,31 @@
                 </div>
             </div>
         </div>
-        <footerPage/>
+        <div class="infoTransactions">
+            <div class="sub-info">
+                <p>Tên phim</p>
+                <p>Tên rạp</p>
+                <p>Tên vé</p>
+                <p>Số lượng</p>
+                <p>Thành tiền</p>
+            </div>
+            <div class="sub-info" v-for="transaction in transactions" :key="transaction.id">
+                <p>{{ transaction.attributes.nameFilm }}</p>
+                <p>{{ transaction.attributes.nameCinema }}</p>
+                <p>{{ transaction.attributes.nameTicket }}</p>
+                <p>{{ transaction.attributes.quantityTicket }}</p>
+                <p>{{ transaction.attributes.spending }}</p>
+            </div>
+        </div>
+        <footerPage class="footerPage"/>
     </div>
 </template>
 
 <script>
 import mainMenu from "./mainMenu.vue";
 import footerPage from "./footerPage.vue";
-// import axios from 'axios';
+import axios from 'axios';
+
 export default {
     name: 'manageUser',
     components: {
@@ -39,7 +56,11 @@ export default {
     data() {
         return {
             userName: JSON.parse(localStorage.getItem('userInfo')),
+            transactions: [],
         }
+    },
+    mounted() {
+        this.fetchBills();
     },
     methods: {
         toggleButton() {
@@ -52,6 +73,19 @@ export default {
                 else { toggleButton.style.display = "none"; }
             }
         }, 
+        async fetchBills()
+        {
+            try {
+                const emailUser = this.userName.email;
+                console.log(emailUser);
+                const response = await axios.get(`http://localhost:3305/api/bills?filters[email]=${emailUser}`);
+                this.transactions = response.data.data;
+                console.log(this.transactions);
+            } catch(error)
+            {
+                console.log("Lỗi khi call API", error)
+            }
+        }
     }
 }
 </script>
@@ -64,6 +98,11 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+/* .footerPage
+{
+    position: fixed;
+    bottom: 0;
+} */
 .sub_container
 {
     width: 80%;
@@ -122,5 +161,30 @@ input
 {
     width: 30%;
     text-align: left;
+}
+.infoTransactions 
+{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid aqua;
+    margin: auto;
+    margin-bottom: 1rem;
+    color: white;
+    font-weight: bold;
+}
+.sub-info
+{
+    display: grid;
+    grid-template-columns: 25% 25% 20% 10% 20%;
+    border: 1px solid aqua;
+}
+.sub-info p
+{
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
 }
 </style>

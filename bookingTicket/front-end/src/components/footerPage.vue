@@ -1,8 +1,8 @@
 <template>
   <div class="footerPage">
       <div>
-        <a><h1>Về chúng tôi</h1></a>
-        <a><p>Hệ thống rạp</p></a>
+        <router-link to="/aboutPage"><h1>Về chúng tôi</h1></router-link>
+        <router-link to="/listCinema"><p>Hệ thống rạp</p></router-link>
         <a><p>Tuyển dụng</p></a>
         <a><p>Liên hệ</p></a>
       </div>

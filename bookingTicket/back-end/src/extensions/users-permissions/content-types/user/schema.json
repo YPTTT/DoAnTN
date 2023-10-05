@@ -68,17 +68,6 @@
     },
     "phoneNumber": {
       "type": "biginteger"
-    },
-    "bills": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::bill.bill"
-    },
-    "bill": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::bill.bill",
-      "mappedBy": "users_permissions_user"
     }
   }
 }
